@@ -1,0 +1,25 @@
+﻿<h4 style="font-size:1.2em;">
+    Dear ALL:
+</h4>
+<div style="text-indent: 2em;">{NowTime} SL001 Two hour capacity push：</div>
+<div style="text-indent: 2em;word-wrap:normal;border:1px solid #ddd;border-radius:4px;width:100%;">
+    <table cellspacing="0" cellpadding="0" border="1" style="width:95%;font-size:1em;margin:auto;border-collapse:collapse;">
+        <tr bgcolor="#00CCCC">
+            <th style="width: 5%; text-align: center;">Workstation</th>
+            <th style="width: 10%; text-align: center;">TimeRange(Hour)</th>
+            <th style="width: 5%; text-align: center;">Non-defective</th>
+            <th style="width: 5%; text-align: center;">Defective</th>
+            <th style="width: 5%; text-align: center;">Repass </th>
+            <th style="width: 5%; text-align: center;">Output</th>
+        </tr>
+        {TableContent}
+
+    </table>
+</div>
+<br />
+<div style="text-indent: 2em;word-wrap:normal;border:1px solid #ddd;border-radius:4px;width:100%;">
+    <img alt='产能图片' src=cid:{ContentId} width:80% ;height="800">
+</div>
+<br />
+<p style="color: Red;">系统邮件, 请勿回复!</p>
+<!--<img src="https://dcs.luxshare-ict.com/Images/topmenu.png" alt="logo" />-->

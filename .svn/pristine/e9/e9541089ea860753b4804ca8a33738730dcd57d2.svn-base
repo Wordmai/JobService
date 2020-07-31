@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <JobScheduler>
+    <!--<Job Description="SolderDCWarn">
+      <DllName>JobService1.dll</DllName>
+      <JobDetail job="SolderDCWarnJob" group="SolderDCWarnGroup" jobtype="JobService.Job.SolderPasteExpiredWarn" />
+      <Trigger name="SolderDCWarnTtigger" group="SolderDCWarnGroup" type="CronTrigger" expression="0 0 0,8 * * ?" />
+    </Job>-->
+      <Job Description="LogiCapacityPush">
+      <DllName>JobService1.dll</DllName>
+      <JobDetail job="LogiCapacityJob" group="LogiCapacityGroup" jobtype="JobService.Job.LogiCapacityPush" />
+      <Trigger name="LogiCapacityTtigger" group="LogiCapacityGroup" type="CronTrigger" expression="0,20,40 * * * * ? " />
+    </Job>
+  </JobScheduler>
+</configuration>

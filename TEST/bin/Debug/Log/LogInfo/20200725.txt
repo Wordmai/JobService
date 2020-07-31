@@ -1,0 +1,11 @@
+<HR COLOR=blue>
+【日志时间】 2020-07-25 15:59:34,803 [DefaultQuartzScheduler_Worker-2] <br>
+【日志级别】 INFO  <br>
+【日 志 类】 loginfo [(null)] <br>
+当前无锡膏过期预警 <br>
+ <HR Size=1><HR COLOR=blue>
+【日志时间】 2020-07-25 15:59:35,560 [DefaultQuartzScheduler_Worker-1] <br>
+【日志级别】 INFO  <br>
+【日 志 类】 loginfo [(null)] <br>
+2020/7/25 15:59:35成功发送邮件 <br>
+ <HR Size=1>

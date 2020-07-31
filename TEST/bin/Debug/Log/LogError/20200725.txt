@@ -1,0 +1,26 @@
+<HR COLOR=red>
+【异常时间】 2020-07-25 15:53:01,500 [DefaultQuartzScheduler_Worker-1] <br>
+【异常级别】 ERROR <br>
+【异 常 类】 logerror [(null)] <br>
+必须指定收件人。 <br>
+ <HR Size=1><HR COLOR=red>
+【异常时间】 2020-07-25 15:53:30,158 [DefaultQuartzScheduler_Worker-3] <br>
+【异常级别】 ERROR <br>
+【异 常 类】 logerror [(null)] <br>
+必须指定收件人。 <br>
+ <HR Size=1><HR COLOR=red>
+【异常时间】 2020-07-25 15:54:00,158 [DefaultQuartzScheduler_Worker-5] <br>
+【异常级别】 ERROR <br>
+【异 常 类】 logerror [(null)] <br>
+必须指定收件人。 <br>
+ <HR Size=1><HR COLOR=red>
+【异常时间】 2020-07-25 15:54:30,149 [DefaultQuartzScheduler_Worker-7] <br>
+【异常级别】 ERROR <br>
+【异 常 类】 logerror [(null)] <br>
+必须指定收件人。 <br>
+ <HR Size=1><HR COLOR=red>
+【异常时间】 2020-07-25 15:55:00,181 [DefaultQuartzScheduler_Worker-9] <br>
+【异常级别】 ERROR <br>
+【异 常 类】 logerror [(null)] <br>
+必须指定收件人。 <br>
+ <HR Size=1>

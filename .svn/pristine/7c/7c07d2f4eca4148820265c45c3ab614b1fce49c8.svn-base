@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <JobScheduler>
+    <Job Description="SolderDCWarn">
+      <DllName>JobService1.dll</DllName>
+      <JobDetail job="SolderDCWarnJob" group="SolderDCWarnGroup" jobtype="JobService.Job.SolderPasteExpiredWarn" />
+      <Trigger name="SolderDCWarnTtigger" group="SolderDCWarnGroup" type="CronTrigger" expression="0 * * * * ? *" />
+    </Job>
+  </JobScheduler>
+</configuration>

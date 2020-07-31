@@ -1,0 +1,16 @@
+<HR COLOR=blue>
+【日志时间】 2020-07-27 10:24:13,056 [DefaultQuartzScheduler_Worker-1] <br>
+【日志级别】 INFO  <br>
+【日 志 类】 loginfo [(null)] <br>
+2020/7/27 10:24:12成功发送邮件 <br>
+ <HR Size=1><HR COLOR=blue>
+【日志时间】 2020-07-27 10:24:34,366 [DefaultQuartzScheduler_Worker-3] <br>
+【日志级别】 INFO  <br>
+【日 志 类】 loginfo [(null)] <br>
+2020/7/27 10:24:34成功发送邮件 <br>
+ <HR Size=1><HR COLOR=blue>
+【日志时间】 2020-07-27 10:25:01,116 [DefaultQuartzScheduler_Worker-4] <br>
+【日志级别】 INFO  <br>
+【日 志 类】 loginfo [(null)] <br>
+2020/7/27 10:25:01成功发送邮件 <br>
+ <HR Size=1>

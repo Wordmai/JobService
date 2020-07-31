@@ -1,0 +1,131 @@
+﻿using JobService.Common;
+using JobService.DAL;
+using JobService.Model;
+using Quartz;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace JobService.Job
+{
+    public class SolderPasteExpiredWarn : IJob
+    {
+        YNSADBHelper ynDBHelper = new YNSADBHelper();
+        static Dictionary<string, string> dictOfStatus = new Dictionary<string, string> {
+            {"F","冰库"},{"W","回温"},{"M","搅拌"},{"P","领用"},{"O","开封"},
+            {"U","上料"},{"T","用完"},{"S","报废"},{"R","回冰"},{"B","下料"}};
+        public void Execute(IJobExecutionContext context)
+        {
+            LogHelper.WriteLog("开始执行JOB");
+            //查出来所有锡膏
+            List<LuxSolder> pasteList = ynDBHelper.GetAllSolderInfo();
+
+            //报废过期产品，并记录即将过期的产品
+            List<LuxSolder> expirePasteList = GetExpirePasteList(pasteList);
+
+            //发送预警邮件
+            SendExpireEmail(expirePasteList);
+        }
+
+        #region 自定义方法
+        /// <summary>
+        /// 报废过期锡膏，记录一个月内过期的锡膏
+        /// </summary>
+        /// <param name="pasteList"></param>
+        /// <returns></returns>
+        private List<LuxSolder> GetExpirePasteList(List<LuxSolder> pasteList)
+        {
+            //声明一个锡膏信息对象，分别保存预警信息和报废信息
+            List<LuxSolder> expireList = new List<LuxSolder>();
+            foreach (LuxSolder paste in pasteList)
+            {
+                //对比是否达到快过期时间
+                if (checkTimeExpor(paste) < 0)
+                {
+                    //直接报废
+                    ynDBHelper.CopySolderMess(paste);
+                    ynDBHelper.UpdateSolderStatusToScrap(paste);
+                }
+                else
+                {
+                    //记录预警的锡膏
+                    if (checkTimeExpor(paste) <= 30)
+                    {
+                        expireList.Add(paste);
+                    }
+                }
+
+            }
+            return expireList;
+        }
+        /// <summary>
+        /// 判断当前时间与保质期时间的差值
+        /// </summary>
+        /// <param name="solder">锡膏对象</param>
+        /// <returns>int 时间差</returns>
+        private int checkTimeExpor(LuxSolder solder)
+        {
+            //获取当前时间
+            DateTime nowTime = DateTime.Now;
+            DateTime endTime = Convert.ToDateTime(solder.DATE_CODE);
+            TimeSpan ts = endTime - nowTime;
+            //返回时间
+            return Convert.ToInt32(ts.Days);
+        }
+        private void SendExpireEmail(List<LuxSolder> pasteList)
+        {
+            //检查是否需要发邮件
+            if (pasteList.Count <= 0)
+            {
+                LogHelper.WriteLog("无过期锡膏");
+                return;
+            }
+
+            //获取收件人信息
+            List<dynamic> emailList = ynDBHelper.GetEmailPerson();
+            string[] recipient = "784819645@qq.com".Split(';');
+            //string[] recipient = Convert.ToString(emailList.Where(p => p.PROGRAM == "SOLDEREMAILTO").FirstOrDefault().PARAM_VALUE).Split(';');
+            //string[] cc = Convert.ToString(emailList.Where(p => p.PROGRAM == "SOLDEREMAILTOCC").FirstOrDefault().PARAM_VALUE).Split(';');
+
+            LogHelper.WriteLog($"发送邮件 {recipient.ToString()}");
+            //发送邮件
+            MailInfo info = new MailInfo();
+            info.MailBody = GeneralPasteMailBody(pasteList);
+            info.MailSubject = string.Format("锡膏过期时间预警");
+            info.MailToArray = recipient;
+            //info.MailCCArray = cc;
+            try
+            {
+                SendMail.SendMailMethod(info);
+                LogHelper.WriteLog($"{DateTime.Now}成功发送邮件");
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteError(ex.Message);
+            }
+        }
+        /// <summary>
+        /// 生成Mail表单
+        /// </summary>
+        /// <param name="List"></param>
+        /// <returns></returns>
+        static string GeneralPasteMailBody(List<LuxSolder> pasteList)
+        {
+            var mailBodyText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\View\SolderPasteWarnPage.html");
+            StringBuilder sb = new StringBuilder();
+            foreach (LuxSolder paste in pasteList)
+            {
+                sb.Append(string.Format("<tr><td style='text-align:center;'>{0}</td>", paste.REEL_NO));
+                sb.Append(string.Format("<td style='text-align:center;'>{0}</td>", paste.DATE_CODE));
+                sb.Append(string.Format("<td style='text-align:center;'>{0}</td>", dictOfStatus.FirstOrDefault(d => d.Key == paste.CURRENT_STATUS).Value));
+            }
+            var register_mailBody = mailBodyText.Replace("{TableContent}", sb.ToString());
+            return register_mailBody;
+        }
+
+        #endregion
+    }
+}
+
